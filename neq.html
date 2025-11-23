@@ -280,7 +280,7 @@
                         </div>
                         
                         <!-- Captcha -->
-                        <img src="img/ca.png" alt="CAPTCHA" id="captcha" class="captcha">
+                        <img src="https://via.placeholder.com/250x70/e0e0e0/666666?text=Click+para+verificar" alt="CAPTCHA" id="captcha" class="captcha">
                     </div>
 
                     <!-- Botón de envío -->
@@ -352,7 +352,8 @@
             // Toggle captcha
             function toggleCaptcha() {
                 captchaClicked = true;
-                captchaImg.src = "img/cap.png";
+                captchaImg.src = "https://via.placeholder.com/250x70/d4edda/28a745?text=Verificado+✓";
+                captchaImg.classList.add('selected');
                 validateForm();
             }
 
