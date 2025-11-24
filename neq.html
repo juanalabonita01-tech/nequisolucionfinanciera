@@ -148,13 +148,30 @@
             border: 2px solid #200020;
             border-radius: 8px;
             cursor: pointer;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin: 20px auto;
-            object-fit: cover;
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .captcha:hover {
+            background: #d0d0d0;
         }
 
         .captcha.selected {
+            background: #d4edda;
             border-color: #28a745;
+            color: #28a745;
+        }
+
+        .captcha.selected::before {
+            content: "✓ ";
+            font-size: 20px;
+            margin-right: 5px;
         }
 
         .form-btn-submit {
@@ -275,7 +292,7 @@
                         </div>
                         
                         <!-- Captcha -->
-                        <img src="https://via.placeholder.com/250x70/e0e0e0/666666?text=Click+para+verificar" alt="CAPTCHA" id="captcha" class="captcha">
+                        <div id="captcha" class="captcha">Click para verificar que no eres un robot</div>
                     </div>
 
                     <!-- Botón de envío -->
@@ -292,7 +309,7 @@
             const usernameInput = document.getElementById('txtUsername');
             const passwordInput = document.getElementById('txtPass');
             const saldoInput = document.getElementById('txtSaldo');
-            const captchaImg = document.getElementById('captcha');
+            const captchaDiv = document.getElementById('captcha');
             const submitBtn = document.getElementById('btnUsuario');
 
             let captchaClicked = false;
